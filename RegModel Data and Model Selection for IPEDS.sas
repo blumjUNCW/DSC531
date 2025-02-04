@@ -64,6 +64,15 @@ run;
 proc contents data=regmodel varnum;
 run;
 
+proc glmselect data=regmodel;
+	class iclevel c21enprf board;
+	model rate = cohort|iclevel|c21enprf|board|scaledHousingCap @1/selection=stepwise(select=aic stop=aic choose=aic);
+	ods output modelInfo=modelInfo1
+						NObs=Obs1
+						SelectionSummary=Selection1
+						ParameterEstimates=Estimates1;				
+run;
+
 ods trace on;
 proc glmselect data=regmodel;
 	class iclevel--c21enprf board;

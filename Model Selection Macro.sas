@@ -1,8 +1,6 @@
 %macro ModelSelect(library=work,dataset= ,class= ,response= ,quant= ,method=stepwise,select=aic,stop=aic,choose=aic,outputData=);
 proc glmselect data=&library..&dataset;
-	%if(&class ne ) %then %do;
-		class &class;
-	%end;	
+	class &class;
 	model &response = &class &quant /selection=&method(select=&select stop=&stop choose=&choose);
 	ods output modelInfo=modelInfo
 						NObs=Obs
